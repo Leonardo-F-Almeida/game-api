@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres12
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ultra
+      PG_DATA: '/var/lib/postgresql/data'
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  dev:
+    container_name: nestjs_api_dev
+    image: nestjs-api-dev:1.0.0
+    build:
+      context: .
+      target: development
+      dockerfile: ./Dockerfile
+      args:
+        - NODE_ENV=development
+    depends_on:
+      - postgres
+    links:
+      - postgres:alpine
+    command: npm run start:debug
+    environment:
+      DATABASE_TYPE: postgres
+      DATABASE_URL: 'postgres://user:password@postgres:5432/ultra'
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+  prod:
+    container_name: nestjs_api_prod
+    image: nestjs-api-prod:1.0.0
+    build:
+      context: .
+      target: production
+      dockerfile: ./Dockerfile
+    command: npm run start:prod
+    environment:
+      DATABASE_TYPE: postgres
+      DATABASE_URL: 'postgres://user:password@postgres:5432/ultra'
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
+volumes:
+  pgdata:
