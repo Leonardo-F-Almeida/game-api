@@ -53,7 +53,7 @@ describe('GamesService', () => {
   });
   describe('findAll', () => {
     it('should return an object with an array of games and count', async () => {
-      const result = await service.findAll({});
+      const result = await service.findAll({ skip: 0, take: 10, title: '' });
       expect(result).toEqual({
         data: gamesMock,
         count: gamesMock.length,

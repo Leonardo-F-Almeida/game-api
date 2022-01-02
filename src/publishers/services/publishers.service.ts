@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
+import { PublishersPagination } from '../controllers/publishers.controller';
 import CreatePublisherDto from '../dto/create-publisher.dto';
 import UpdatePublisherDto from '../dto/update-publisher.dto';
 import Publisher from '../entities/publisher.entity';
@@ -26,7 +27,7 @@ export default class PublishersService {
     return this.findOne(game.id);
   }
 
-  async findAll(query): Promise<{
+  async findAll(query: PublishersPagination): Promise<{
     data: Publisher[];
     count: number;
   }> {

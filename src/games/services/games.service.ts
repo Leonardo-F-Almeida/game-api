@@ -12,6 +12,7 @@ import UpdateGameDto from '../dto/update-game.dto';
 import Game from '../entities/game.entity';
 
 import PublishersService from '../../publishers/services/publishers.service';
+import { GamesPagination } from '../controllers/games.controller';
 
 @Injectable()
 export default class GamesService {
@@ -44,7 +45,7 @@ export default class GamesService {
     return this.findOne(game.id);
   }
 
-  async findAll(query): Promise<{
+  async findAll(query: GamesPagination): Promise<{
     data: Game[];
     count: number;
   }> {

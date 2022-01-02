@@ -47,7 +47,7 @@ describe('PublishersService', () => {
   });
   describe('findAll', () => {
     it('should return an object with an array of publishers and count', async () => {
-      const result = await service.findAll({});
+      const result = await service.findAll({ skip: 0, take: 10, name: '' });
       expect(result).toEqual({
         data: publishersMock,
         count: publishersMock.length,
