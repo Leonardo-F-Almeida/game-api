@@ -1,6 +1,5 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { gameMock } from 'src/games/mocks/game.mock';
 
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
