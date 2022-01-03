@@ -32,19 +32,13 @@ For this challenge I'm passing the walkthrough to work with docker only, it´s a
 
 ### Docker
 
-To run the project with docker(dev):
-
-```bash
-docker compose up dev
-```
-
 To run the project with docker(prod):
 
 ```bash
-docker compose up prod
+ docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from prod
 ```
 
-So, there´s differents containers for dev, prod and e2e tests, if you take a look I´m using the same postgres container for all of them, for the purpose of this challenge it´s not a problem, but if you use this as a example for a real project, be aware you will need differents postres containers for each scenario.
+So, there´s differents containers for prod and e2e tests, if you take a look I´m using the same postgres container for all of them, for the purpose of this challenge it´s not a problem, but if you use this as a example for a real project, be aware you will need differents postgres containers for each scenario.
 
 ## The API
 
@@ -56,13 +50,12 @@ The project was covered using Jest. You can run some of these commands below:
 
 ```bash
 # unit tests
+$ npm install
 $ npm run test
 
 # e2e tests
-$ npm run test:e2e
+$ docker-compose -f docker-compose.e2e.yml up --abort-on-container-exit --exit-code-from dev
 
-# test coverage
-$ npm run test:cov
 ```
 
 ## Test by Postman

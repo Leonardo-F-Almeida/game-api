@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PublishersModule } from 'src/publishers/publishers.module';
+import { PublishersModule } from '../publishers/publishers.module';
 import GamesController from './controllers/games.controller';
 import Game from './entities/game.entity';
 import { ScheduleService } from './jobs/schedule.service';
